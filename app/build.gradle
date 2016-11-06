@@ -1,0 +1,112 @@
+apply plugin: 'com.android.application'
+apply plugin: 'packer'
+apply plugin: 'plugin.test'
+android {
+    compileSdkVersion 24
+    buildToolsVersion '24.0.2'
+    defaultConfig {
+        applicationId "com.longway.productflavor"
+        minSdkVersion 15
+        targetSdkVersion 24
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    sourceSets {
+        main {
+            res {
+                exclude '**/activity_mmainn.xml'
+            }
+        }
+    }
+    packagingOptions {
+
+        exclude 'META-INF/ASL2.0'
+
+        exclude 'META-INF/LICENSE'
+
+        exclude 'META-INF/NOTICE'
+
+        exclude 'META-INF/MANIFEST.MF'
+
+    }
+    signingConfigs {
+        release {
+            // 同时满足下面两个条件才需要此配置
+            // 1. Gradle版本 >= 2.14.1
+            // 2. Android Gradle Plugin 版本 >= 2.2.0
+            // 作用是只使用旧版签名，禁用V2版签名模式
+            v2SigningEnabled false
+        }
+
+        debug {
+            v2SigningEnabled false
+            // 非控制台或者重定向就是需用这个实现控制台输入
+            Scanner scanner = new Scanner(System.in)
+            //String line = System.console().readLine()
+            //System.out.println("\npassword:")
+            println("\npassword:")
+            //println(scanner.nextLine())
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            debuggable false
+        }
+
+        debug {
+            applicationIdSuffix ".debug"
+        }
+        jnidebug {
+
+            // This copies the debuggable attribute and debug signing configurations.
+            initWith debug
+
+            applicationIdSuffix ".jnidebug"
+            jniDebuggable true
+        }
+        productFlavors {
+            demo {
+                applicationId "com.example.myapp.demo"
+                versionName "1.0-demo"
+                //manifestPlaceholders = [channelName: "demo"]
+
+            }
+            full {
+                applicationId "com.example.myapp.full"
+                versionName "1.0-full"
+                //manifestPlaceholders = [channelName: "full"]
+            }
+        }
+
+    }
+    productFlavors.findAll().forEach {
+        it.manifestPlaceholders = [channelName: it.name]
+    }
+    sourceSets {
+        demo {
+            java.srcDirs = ['src/demo/java', 'src/demo/java/']
+            res.srcDirs = ['src/demo/res', 'src/demo/res/']
+        }
+        full {
+            java.srcDirs = ['src/full/java', 'src/full/java/']
+            res.srcDirs = ['src/full/res', 'src/full/res/']
+        }
+    }
+}
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:24.0.0'
+    testCompile 'junit:junit:4.12'
+    //demoCompile project(path: ':testflavor', configuration: 'debug')
+    //fullCompile project(path: ':testflavor2', configuration: 'debug')
+    compile project(':testflavor')
+    compile project(':testflavor2')
+    compile 'com.mcxiaoke.gradle:packer-helper:1.0.7'
+}

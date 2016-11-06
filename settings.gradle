@@ -1,0 +1,1 @@
+include ':app', ':testflavor', ':testflavor2', ':module', ':bz_common'
