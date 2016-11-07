@@ -24,7 +24,7 @@ public class ReflectUtils {
             ParameterizedType parameterizedType = (ParameterizedType) type;
             Type[] types = parameterizedType.getActualTypeArguments();
             if (types != null && types.length > 0) {
-                if (index > 0 && index < types.length) {
+                if (index >= 0 && index < types.length) {
                     return (Class<T>) types[index];
                 }
             }
