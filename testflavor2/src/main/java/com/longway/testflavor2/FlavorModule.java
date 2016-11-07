@@ -8,7 +8,8 @@ import com.longway.module.Module;
  * Created by longway on 16/11/6. Email:longway1991117@sina.com
  */
 
-public class FlavorModule implements Module<IUIFlavor, IPService> {
+public class FlavorModule implements Module<IUIFlavor,IPService> {
+
 
     @Override
     public IUIFlavor getUIService() {

@@ -16,8 +16,29 @@ public abstract class ModuleProxy<U, S> implements Module<U, S> {
         if (module == null) {
             return null;
         }
-        return module.getUIService();
+        Object o = module.getUIService();
+        return (U) verify(o, 0);
     }
+
+    /**
+     * check client-service protocol
+     * @param o check object
+     * @param index param index
+     */
+    private Object verify(Object o, int index) {
+        if (o == null) { // service-end null
+            return null;
+        }
+        Class<?> clz = ReflectUtils.getTypeByIndex(getClass(), index);
+        if (clz == null) {
+            return o;
+        }
+        if (!clz.isAssignableFrom(o.getClass())) {
+            throw new IllegalConventionException(o.getClass() + " must be isAssignableFrom " + clz);
+        }
+        return o;
+    }
+
 
     /**
      * get controller service
@@ -28,7 +49,8 @@ public abstract class ModuleProxy<U, S> implements Module<U, S> {
         if (module == null) {
             return null;
         }
-        return module.getPresenterService();
+        Object o = module.getPresenterService();
+        return (S) verify(o, 1);
     }
 
     private Module<U, S> getProxy() {
@@ -43,7 +65,6 @@ public abstract class ModuleProxy<U, S> implements Module<U, S> {
 
     /**
      * get default module service when load service error
-     * @return
      */
     public abstract Module<U, S> getDefaultModuleService();
 }
