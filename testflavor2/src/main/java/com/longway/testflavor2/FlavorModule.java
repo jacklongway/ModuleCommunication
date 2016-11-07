@@ -13,7 +13,7 @@ public class FlavorModule implements Module<IUIFlavor,IPService> {
 
     @Override
     public IUIFlavor getUIService() {
-        return null;
+        return Flavor.getInstance();
     }
 
     @Override

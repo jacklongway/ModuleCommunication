@@ -5,4 +5,5 @@ package com.longway.bz_common.module.flavor1;
  */
 
 public interface IUIFlavor {
+    void update(String msg);
 }

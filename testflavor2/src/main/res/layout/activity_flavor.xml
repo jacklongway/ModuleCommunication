@@ -5,11 +5,11 @@
               android:fitsSystemWindows="true"
               android:layout_height="match_parent">
 
-    <TextView
+    <Button
             android:layout_width="match_parent"
-            android:id="@+id/tv"
-            android:gravity="center"
-            android:text="module1"
-            android:layout_height="match_parent"/>
+            android:id="@+id/flavor_btn"
+            android:text="forward"
+            android:onClick="action"
+            android:layout_height="wrap_content"/>
 
 </LinearLayout>
