@@ -108,5 +108,6 @@ dependencies {
     //fullCompile project(path: ':testflavor2', configuration: 'debug')
     compile project(':testflavor')
     compile project(':testflavor2')
+    compile project(':bz_common')
     compile 'com.mcxiaoke.gradle:packer-helper:1.0.7'
 }

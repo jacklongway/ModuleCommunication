@@ -69,8 +69,8 @@ public class ModuleManager {
                 return module;
             } catch (Throwable e) {
                 e.printStackTrace();
+                throw new IllegalModuleTypeException(moduleName+" not create instance.");
             }
         }
-        return null;
     }
 }
