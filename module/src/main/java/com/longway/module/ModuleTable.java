@@ -29,7 +29,7 @@ public class ModuleTable extends AbstractModuleTable {
     }
 
     /**
-     * by module and service alias get module service class
+     * by service alias get module service class
      */
     @Override
     public String getModuleServiceName(String serviceAliasName) {
