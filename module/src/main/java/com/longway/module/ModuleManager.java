@@ -15,7 +15,7 @@ import java.util.HashMap;
  */
 
 public class ModuleManager {
-    private static ModuleManager sInstance;
+    private static volatile ModuleManager sInstance;
     private HashMap<String, Module> mModuleCache;
 
     private ModuleManager() {
